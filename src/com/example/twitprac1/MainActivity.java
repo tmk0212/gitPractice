@@ -171,7 +171,13 @@ public class MainActivity extends ListActivity {
 				startActivity(intent);
 				return true;
 			case R.id.menu_mytweet:
-				reloadTimeLine("ooiooa13");
+			try {
+				reloadTimeLine(mTwitter.getScreenName());
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (TwitterException e) {
+				e.printStackTrace();
+			}
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
