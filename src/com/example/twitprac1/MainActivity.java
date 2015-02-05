@@ -120,7 +120,11 @@ public class MainActivity extends ListActivity {
 			protected List<twitter4j.Status> doInBackground(Void... params){
 				try{
 					if(userScreenName != ""){
-						return mTwitter.getUserTimeline(userScreenName);
+						if(userScreenName == getString(R.string.mention_tl_key)){
+							return mTwitter.getMentionsTimeline();
+						}	else{
+							return mTwitter.getUserTimeline(userScreenName);
+						}
 					}	else{
 						return mTwitter.getHomeTimeline();
 					}
@@ -171,13 +175,10 @@ public class MainActivity extends ListActivity {
 				startActivity(intent);
 				return true;
 			case R.id.menu_mytweet:
-			try {
-				reloadTimeLine(mTwitter.getScreenName());
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (TwitterException e) {
-				e.printStackTrace();
-			}
+				reloadTimeLine(getString(R.string.author_screen_name));
+				return true;
+			case R.id.menu_mention:
+				reloadTimeLine(getString(R.string.mention_tl_key));
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
