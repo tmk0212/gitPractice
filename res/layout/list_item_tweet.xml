@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:background="#333333"
+    android:padding="8dp" >
+    
+    <com.loopj.android.image.SmartImageView 
+        android:id="@+id/icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+    
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icon"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/icon"
+        android:textSize="10sp"
+        android:textColor="#f0f0f0"
+        android:text="名前入ります" />
+    
+    <TextView 
+        android:id="@+id/screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/name"
+        android:textSize="10sp"
+        android:textColor="#d0d0d0"
+        android:text="\uFF20tmk" />
+    
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/name"
+        android:layout_below="@+id/name"
+        android:textSize="10sp"
+        android:textColor="#f0f0f0"
+        android:text="本文ですよー" />
+        
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/text"
+        android:textSize="8sp"
+        android:textColor="#d0d0d0"
+        android:text="Time" />
+
+    <TextView 
+        android:id="@+id/viaSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_alignRight="@+id/text"
+        android:layout_marginTop="1dp"
+        android:textSize="8sp"
+        android:textColor="#d0d0d0"
+        android:text="Twitter for WebClient" />
+    
+    <TextView
+        android:id="@+id/fav_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_toLeftOf="@+id/viaSource"
+        android:layout_marginRight="8dp"
+        android:textSize="9sp"
+        android:textColor="#ffe999"
+        android:text="☆:1" />
+    
+    <TextView 
+        android:id="@+id/rt_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:layout_marginRight="12dp"
+        android:layout_toLeftOf="@+id/fav_count"
+        android:textSize="9sp"
+        android:textColor="#66d099"
+        android:text="RT:1" />
+
+    
+</RelativeLayout>
