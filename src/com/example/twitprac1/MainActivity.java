@@ -80,7 +80,10 @@ public class MainActivity extends ListActivity {
 			screenName.setText("@" + item.getUser().getScreenName());
 			
 			TextView text = (TextView) convertView.findViewById(R.id.text);
-			text.setText(item.getText());
+			String tweetText = item.getText();
+			tweetText = tweetText.replaceAll("@[a-zA-Z0-9._-]* ", "&lt;span style=\"color:\"#b9b9ff\"\"&gt;@[a-zA-Z0-9._-]* &lt;/span&gt;").replaceAll("\n", "&lt;br&gt;");
+			//ToDo ÉÅÉìÉVÉáÉìÇÃHTMLâª
+			text.setText(Html.fromHtml((item.getText())));
 			
 			SmartImageView icon = (SmartImageView) convertView.findViewById(R.id.icon);
 			icon.setImageUrl(item.getUser().getProfileImageURL());
