@@ -79,7 +79,7 @@ public class MainActivity extends ListActivity {
 
 			TextView text = (TextView) convertView.findViewById(R.id.text);
 			String tweetText = item.getText();
-			tweetText = tweetText.replaceAll("@[a-zA-Z0-9._-]* ", "<font color=\"#44aaff\">@[a-zA-Z0-9._-]* </font>").replaceAll("\n", "<br>");
+			tweetText = tweetText.replaceAll("@[a-zA-Z0-9._-]* ", "<font color=\"#44aaff\">$0 </font>").replaceAll("\n", "<br>");
 			//ToDo ÉÅÉìÉVÉáÉìÇÃHTMLâª
 			text.setText(Html.fromHtml(tweetText));
 
