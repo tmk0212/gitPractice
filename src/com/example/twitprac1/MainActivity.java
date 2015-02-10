@@ -22,8 +22,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,8 +113,11 @@ public class MainActivity extends ListActivity {
 			}	else{
 				rt_count.setText("");
 			}
+
+			registerForContextMenu(convertView);
 			return convertView;
 		}
+
 	}
 
 	private void reloadTimeLine(final String userScreenName){
@@ -149,6 +155,7 @@ public class MainActivity extends ListActivity {
 					showToast("TLì«Ç›çûÇ›Ç…é∏îs");
 				}
 			}
+
 		};
 		task.execute();
 	}
@@ -185,4 +192,23 @@ public class MainActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
+//		showToast("Long Clicked!!");
+		MenuInflater mInflater = getMenuInflater();
+		mInflater.inflate(R.menu.popup, menu);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item){
+		switch(item.getItemId()){
+			case R.id.context_reply:
+				showToast("Reply clicked!");
+				return true;
+			case R.id.context_rt:
+				showToast("ReTweet Clicked!");
+				return true;
+		}
+		return false;
+	}
 }
