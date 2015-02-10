@@ -71,7 +71,7 @@ public class MainActivity extends ListActivity {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent){
+		public View getView(final int position, View convertView, ViewGroup parent){
 			if(convertView == null){
 				convertView = mInflater.inflate(R.layout.list_item_tweet, null);
 			}
@@ -119,7 +119,7 @@ public class MainActivity extends ListActivity {
 			convertView.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View convertView){
-					showToast("Clicked");
+					showToast("Clicked" + position);
 				}
 			});
 			return convertView;
