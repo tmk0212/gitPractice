@@ -29,7 +29,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,8 +115,13 @@ public class MainActivity extends ListActivity {
 			}	else{
 				rt_count.setText("");
 			}
-
 			registerForContextMenu(convertView);
+			convertView.setOnClickListener(new OnClickListener(){
+				@Override
+				public void onClick(View convertView){
+					showToast("Clicked");
+				}
+			});
 			return convertView;
 		}
 
@@ -194,13 +201,18 @@ public class MainActivity extends ListActivity {
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
-//		showToast("Long Clicked!!");
+		super.onCreateContextMenu(menu, view, menuInfo);
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+//		menu.setHeaderTitle("Menu" + mAdapter.getItem(info.position).getUser().getScreenName());
 		MenuInflater mInflater = getMenuInflater();
 		mInflater.inflate(R.menu.popup, menu);
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item){
+		super.onContextItemSelected(item);
+		AdapterContextMenuInfo menuInfo = (AdapterContextMenuInfo) item.getMenuInfo();
+
 		switch(item.getItemId()){
 			case R.id.context_reply:
 				showToast("Reply clicked!");
