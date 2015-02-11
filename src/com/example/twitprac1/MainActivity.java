@@ -33,6 +33,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import com.loopj.android.image.SmartImageView;
 public class MainActivity extends ListActivity {
 	private TweetAdapter mAdapter;
 	private Twitter mTwitter;
+	private ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -84,8 +86,7 @@ public class MainActivity extends ListActivity {
 
 			TextView text = (TextView) convertView.findViewById(R.id.text);
 			String tweetText = item.getText();
-			tweetText = tweetText.replaceAll("@[a-zA-Z0-9._-]* ", "<font color=\"#44aaff\">$0 </font>").replaceAll("\n", "<br>");
-			//ToDo ÉÅÉìÉVÉáÉìÇÃHTMLâª
+			tweetText = tweetText.replaceAll("@[a-zA-Z0-9._-]* ", "<font color=\"#44aaff\">$0 </font>").replaceAll("\n", "<br>").replaceAll("(http://|https://){1}[\\w\\.\\-/:\\#\\?\\=\\&\\;\\%\\~\\+]+", "<a href=\"$0\">$0 </a>");
 			text.setText(Html.fromHtml(tweetText));
 
 			SmartImageView icon = (SmartImageView) convertView.findViewById(R.id.icon);
@@ -115,13 +116,14 @@ public class MainActivity extends ListActivity {
 			}	else{
 				rt_count.setText("");
 			}
-			registerForContextMenu(convertView);
-			convertView.setOnClickListener(new OnClickListener(){
-				@Override
-				public void onClick(View convertView){
-					showToast("Clicked" + position);
-				}
-			});
+//			registerForContextMenu(convertView);
+//			convertView.setOnClickListener(new OnClickListener(){
+//				@Override
+//				public void onClick(View convertView){
+//					showToast("Clicked" + position);
+//					showToast(getItem(position).getUser().getScreenName());
+//				}
+//			});
 			return convertView;
 		}
 
@@ -156,7 +158,10 @@ public class MainActivity extends ListActivity {
 					for(twitter4j.Status status : result){
 						mAdapter.add(status);
 					}
-					getListView().setSelection(0);
+//					getListView().setSelection(0);
+					listView = getListView();
+					listView.setSelection(0);
+					registerForContextMenu(listView);
 				}
 				else{
 					showToast("TLì«Ç›çûÇ›Ç…é∏îs");
@@ -203,7 +208,10 @@ public class MainActivity extends ListActivity {
 	public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo){
 		super.onCreateContextMenu(menu, view, menuInfo);
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-//		menu.setHeaderTitle("Menu" + mAdapter.getItem(info.position).getUser().getScreenName());
+		String tweetText = mAdapter.getItem(info.position).getText();
+		menu.setHeaderTitle(
+				"@" + mAdapter.getItem(info.position).getUser().getScreenName()
+				+ ":" + tweetText);
 		MenuInflater mInflater = getMenuInflater();
 		mInflater.inflate(R.menu.popup, menu);
 	}
@@ -215,12 +223,17 @@ public class MainActivity extends ListActivity {
 
 		switch(item.getItemId()){
 			case R.id.context_reply:
-				showToast("Reply clicked!");
+				Intent intent = new Intent(this, TweetActivity.class);
+				intent.putExtra("toReply", mAdapter.getItem(menuInfo.position).getUser().getScreenName());
+				startActivity(intent);
 				return true;
 			case R.id.context_rt:
 				showToast("ReTweet Clicked!");
 				return true;
+			case R.id.context_user_timeline:
+				reloadTimeLine(mAdapter.getItem(menuInfo.position).getUser().getScreenName());
 		}
 		return false;
 	}
+	
 }
